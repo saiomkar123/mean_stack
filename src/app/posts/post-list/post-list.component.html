@@ -1,0 +1,18 @@
+<mat-accordion multi=true>
+  <mat-expansion-panel *ngFor="let p of posts">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ p.title }}
+      </mat-panel-title>
+      <!-- <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description> -->
+    </mat-expansion-panel-header>  
+    <p>{{ p.content }}</p>
+    <mat-action-row>
+      <button mat-button color="primary">Edit</button>
+      <button mat-button color="warn" (click)="onDelete(p.id)">Delete</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="mat-body-1" *ngIf="!posts.length">No Posts Added yet.</p>

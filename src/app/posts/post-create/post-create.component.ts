@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter,Output } from '@angular/core';
+import { Post } from '../post.model';
+import { PostsService } from '../posts.service'
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-post-create',
@@ -6,15 +9,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post-create.component.css']
 })
 export class PostCreateComponent implements OnInit {
+  enterTitle=''
+  enterContent = ''
 
-  newPost = ''
-  constructor() { }
+  @Output() postCreated = new EventEmitter<Post>()
+
+  constructor(public postService: PostsService) { }
 
   ngOnInit() {
   }
 
-  onAddPost(){
-    this.newPost = 'Post Triggered.'
+  onAddPost(form: NgForm){
+    console.log(form)
+    if(form.invalid){
+      return
+    }
+    const post:Post = {
+      "id":null,
+      "title":form.value.title,
+      "content":form.value.content
+    }
+    // console.log(post)
+    this.postService.addPost(post)
+    form.resetForm()
+    // this.postCreated.emit(post)
   }
 
 }
